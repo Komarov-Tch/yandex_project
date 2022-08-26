@@ -5,7 +5,7 @@ Base = declarative_base()
 
 
 class Child:
-    '''Информация о студенте'''
+    """Информация о студенте"""
     __tablename__ = 'child'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
@@ -19,7 +19,7 @@ class Child:
 
 
 class Shool:
-    '''Школа где ребенок учится'''
+    """Школа где ребенок учится"""
     __tablename__ = 'shool'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
@@ -30,7 +30,7 @@ class Shool:
 
 
 class Group:
-    '''Группа'''
+    """Группа"""
     __tablename__ = 'group'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
@@ -40,7 +40,7 @@ class Group:
 
 
 class Mentor:
-    '''Преподаватели'''
+    """Преподаватели"""
     __tablename__ = 'mentor'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
@@ -49,7 +49,7 @@ class Mentor:
 
 
 class Directories:
-    '''Направления образования'''
+    """Направления образования"""
     __tablename__ = 'directories'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
@@ -60,7 +60,7 @@ class Directories:
 
 
 class Parents:
-    '''Родители ребенка'''
+    """Родители ребенка"""
     __tablename__ = 'parents'
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
     name = sq.Column(sq.Text, nullable=False)
