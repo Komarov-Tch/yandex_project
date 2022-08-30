@@ -2,13 +2,12 @@ import sqlite3
 import sqlalchemy
 import os
 from sqlalchemy.orm import sessionmaker
-from data.models import *
+from models import *
 
 
 class Db:
-    def __init__(self, **connect_info):
-        self.connect_info = connect_info
-        dsn = f'sqlite:///../{self.connect_info["catalog"]}/{self.connect_info["base_name"]}'
+    def __init__(self, base_name):
+        dsn = f'sqlite:///{base_name}'
         self.engine = sqlalchemy.create_engine(dsn)
 
     def return_engine(self):
@@ -142,10 +141,9 @@ class Db:
         return result
 
 
-info = {'catalog': 'database',
-        'base_name': 'db_child.sqlite'}
+info = 'db_child.sqlite'
 
-new = Db(**info)
+new = Db(info)
 new.create_tab()
 
 courses = [{'title': 'python для новичков',
