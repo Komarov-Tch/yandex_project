@@ -60,6 +60,87 @@ class Db:
         except:
             return False
 
+    def add_school(self, shool_info: dict) -> bool:
+        """
+        adding information about the school
+        :param shool_info:
+        title:str
+        adress:str
+        diretor:str
+        telephone:str
+        :return: bool
+        """
+        try:
+            Session = sessionmaker(bind=self.engine)
+            session = Session()
+            add_ = Shool(**shool_info)
+            session.add(add_)
+            session.commit()
+            session.close()
+            return True
+        except:
+            return False
+
+    def add_group(self, group_info: dict) -> bool:
+        """
+        :param group_info:
+        :firstname  - mentor
+        :lastname - mentor
+        :code: number of group
+        :title - title Direrories
+        :return:
+        """
+        try:
+            Session = sessionmaker(bind=self.engine)
+            session = Session()
+            query_m = self.query_mentor(group_info['firstname'], group_info['lastname'])
+            if query_m:
+                id_mentor = query_m[0]['id']
+            else:
+                raise
+            query_d = self.query_directories(group_info['title'])
+            if query_d:
+                id_derictories = query_d[0]['id']
+            else:
+                raise
+            add_ = Group(code=group_info['code'],
+                         id_mentors=id_mentor,
+                         id_direction=id_derictories)
+            session.add(add_)
+            session.commit()
+            session.close()
+            return True
+        except:
+            return False
+
+    def query_mentor(self, firstname, lastname) -> list:
+        Session = sessionmaker(bind=self.engine)
+        session = Session()
+        query = session.query(Mentor).filter(Mentor.firstname == firstname, Mentor.lastname == lastname).all()
+        session.close()
+        result = []
+        for q in query:
+            result.append({'id': q.id,
+                           'firstname': q.firstname,
+                           'lastname': q.lastname,
+                           'midlename': q.midlename,
+                           'diplom': q.diplom})
+        return result
+
+    def query_directories(self, title: str) -> list:
+        Session = sessionmaker(bind=self.engine)
+        session = Session()
+        query = session.query(Directories).filter(Directories.title == title).all()
+        session.close()
+        result = []
+        for q in query:
+            result.append({'id': q.id,
+                           'title': q.title,
+                           'min_age': q.min_age,
+                           'max_age': q.max_age,
+                           'description': q.description})
+        return result
+
 
 info = {'catalog': 'database',
         'base_name': 'db_child.sqlite'}
@@ -67,35 +148,41 @@ info = {'catalog': 'database',
 new = Db(**info)
 new.create_tab()
 
-courses = [{'name': 'python для новичков',
+courses = [{'title': 'python для новичков',
             'min_age': 13,
             'max_age': 17,
             'description': 'Программирование на питоне'},
-           {'name': 'кодвардс',
+           {'title': 'кодвардс',
             'min_age': 9,
             'max_age': 11,
             'description': 'Основы программирования на кодвардсе'
             },
-           {'name': 'Сиситемное администрированние',
+           {'title': 'Сиситемное администрированние',
             'min_age': 13,
             'max_age': 17,
             'description': 'Собираем компы и тд'
             }]
 
 mentors = [{
-    'firsname': 'Иван',
+    'firstname': 'Иван',
     'lastname': 'Иванов',
     'diplom': 'Красноярский педагогический'
 },
     {
-        'firsname': 'Светлана',
+        'firstname': 'Светлана',
         'lastname': 'Иванова',
         'midlename': 'Петровна',
         'diplom': 'Красноярский технический'
     }]
 
+group_info = {'firstname': 'Иван',
+              'lastname': 'Иванов',
+              'code': 'cod-22-01',
+              'title': 'кодвардс'}
 for i in courses:
     new.add_directories(i)
 
 for notes in mentors:
     new.add_mentors(notes)
+
+print(new.add_group(group_info))

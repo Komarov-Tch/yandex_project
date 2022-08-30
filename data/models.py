@@ -25,7 +25,7 @@ class Shool(Base):
     __tablename__ = 'shool'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
-    name = sq.Column(sq.Text, nullable=False)
+    title = sq.Column(sq.Text, nullable=False)
     adress = sq.Column(sq.Text, nullable=False)
     director = sq.Column(sq.Text, nullable=False)
     telephone = sq.Column(sq.Text, nullable=False)
@@ -48,7 +48,7 @@ class Mentor(Base):
     __tablename__ = 'mentor'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
-    firsname = sq.Column(sq.Text, nullable=False)
+    firstname = sq.Column(sq.Text, nullable=False)
     lastname = sq.Column(sq.Text, nullable=False)
     midlename = sq.Column(sq.Text, nullable=True)
     diplom = sq.Column(sq.Text, nullable=False)
@@ -59,7 +59,7 @@ class Directories(Base):
     __tablename__ = 'directories'
 
     id = sq.Column(sq.Integer, primary_key=True, unique=True, autoincrement=True)
-    name = sq.Column(sq.Text, nullable=False)
+    title = sq.Column(sq.Text, nullable=False)
     min_age = sq.Column(sq.Integer, nullable=False)
     max_age = sq.Column(sq.Integer, nullable=False)
     description = sq.Column(sq.Text, nullable=True)
